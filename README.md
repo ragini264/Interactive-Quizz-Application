@@ -69,7 +69,7 @@ Total number of questions
 Number of correct answers
 Final percentage or score
 
-________OUTPUT__________
+OUTPUT
 ![Image](https://github.com/user-attachments/assets/2cb74628-6e28-44b1-9671-fbe6bc912ee3)
 
 ![Image](https://github.com/user-attachments/assets/9b95a1c6-a4f3-403c-aae3-80e762ffc948)
