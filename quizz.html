@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #2c3e50;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background: #34495e;
+      padding: 20px 40px;
+      border-radius: 8px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    .quiz-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .question {
+      margin: 20px 0;
+    }
+
+    .btn {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background: #1abc9c;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      background: #16a085;
+    }
+
+    #score {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Simple Quiz</h2>
+    <div id="quiz">
+      <div class="question" id="question">Loading question...</div>
+      <div id="answer-buttons"></div>
+      <button id="next-btn" class="btn">Next</button>
+    </div>
+    <div id="score"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What does HTML stand for?",
+        answers: [
+          { text: "Hyper Text Markup Language", correct: true },
+          { text: "Hot Mail", correct: false },
+          { text: "How to Make Links", correct: false },
+          { text: "Hyperlinks and Text Mark Language", correct: false }
+        ]
+      },
+      {
+        question: "Which language runs in a web browser?",
+        answers: [
+          { text: "Java", correct: false },
+          { text: "C", correct: false },
+          { text: "Python", correct: false },
+          { text: "JavaScript", correct: true }
+        ]
+      },
+      {
+        question: "What year was JavaScript launched?",
+        answers: [
+          { text: "1996", correct: false },
+          { text: "1995", correct: true },
+          { text: "1994", correct: false },
+          { text: "none of the above", correct: false }
+        ]
+      },
+      {
+        question: "What is the correct option of the following code?",
+        answers: [
+          { text: "class 'int'", correct: false },
+          { text: "class 'str'", correct: true },
+          { text: "class 'float'", correct: false },
+          { text: "class 'bool'", correct: false }
+        ]
+      },
+      {
+        question: "Which of the following is not a JAVA Keyword?",
+        answers: [
+          { text: "static", correct: false },
+          { text: "Boolean", correct: true },
+          { text: "class", correct: false },
+          { text: "try'", correct: false }
+        ]
+      },
+          {
+        question: "What does the printf function do in C?",
+        answers: [
+          { text: "Takes user input", correct: false },
+          { text: "Outputs data to the screen", correct: true },
+          { text: "Declares a function", correct: false },
+          { text: "Terminates a program", correct: false }
+        ]
+      }
+    ];
+
+    const questionEl = document.getElementById("question");
+    const answerButtons = document.getElementById("answer-buttons");
+    const nextBtn = document.getElementById("next-btn");
+    const scoreEl = document.getElementById("score");
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      nextBtn.innerHTML = "Next";
+      scoreEl.innerHTML = "";
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      const currentQuestion = questions[currentQuestionIndex];
+      questionEl.innerHTML = currentQuestion.question;
+
+      currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        button.addEventListener("click", () => selectAnswer(answer));
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function resetState() {
+      nextBtn.style.display = "none";
+      answerButtons.innerHTML = "";
+    }
+
+    function selectAnswer(answer) {
+      if (answer.correct) {
+        score++;
+      }
+      nextBtn.style.display = "block";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    });
+
+    function showScore() {
+      resetState();
+      questionEl.innerHTML = "Quiz Completed!";
+      scoreEl.innerHTML = `Your Score: ${score} / ${questions.length}`;
+      nextBtn.innerHTML = "Restart";
+      nextBtn.style.display = "block";
+      nextBtn.onclick = startQuiz;
+    }
+
+    startQuiz();
+  </script>
+</body>
+</html>
